@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:native_edit_text/native_edit_text.dart';
 
 void main() {
@@ -34,18 +31,23 @@ class _MyAppState extends State<MyApp> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.red)),
-                  child: EditText(
-                    onEditTextCreated: (controller) {
-                      setState(() {
-                        _controller = controller;
-                      });
-                    },
-                  ),
-                ),
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.red)),
+                    child: Material(
+                      child: TextField(
+                        maxLines: 1,
+                      ),
+                    )
+                    // EditText(
+                    //   onEditTextCreated: (controller) {
+                    //     setState(() {
+                    //       _controller = controller;
+                    //     });
+                    //   },
+                    // ),
+                    ),
                 FutureBuilder(
                   future: _controller?.getText(),
                   builder: (context, snapshot) => Text(snapshot.hasData
