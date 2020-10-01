@@ -35,10 +35,8 @@ class _MyAppState extends State<MyApp> {
                     height: 50,
                     decoration:
                         BoxDecoration(border: Border.all(color: Colors.red)),
-                    child: Material(
-                      child: TextField(
-                        maxLines: 1,
-                      ),
+                    child: TextField(
+                      maxLines: 1,
                     )
                     // EditText(
                     //   onEditTextCreated: (controller) {
@@ -56,7 +54,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 RaisedButton(
                   onPressed: () {
-                    if (_controller != null) _controller.text = 'TESTIG';
+                    if (_controller != null) _controller.text = 'TESTING';
                   },
                   child: Text('TEST'),
                 )
