@@ -38,18 +38,49 @@ class _EditTextState extends State<EditText> {
   }
 }
 
-class EditTextController {
-  EditTextController._(int id)
-      : _channel = MethodChannel('net.apexteam.nativeedittext/edittext_$id');
+class EditTextController extends ValueNotifier<TextEditingValue> {
+  EditTextController._(int id, {String text})
+      : _channel = MethodChannel('net.apexteam.nativeedittext/edittext_$id'),
+        _eventChannel = EventChannel(
+            'net.apexteam.nativeedittext/edittext_$id/text_change'),
+        super(text == null
+            ? TextEditingValue.empty
+            : TextEditingValue(text: text)) {
+    _onTextChanged = _eventChannel
+        .receiveBroadcastStream()
+        .map((dynamic event) => event as String);
+
+    _onTextChanged.listen((event) {
+      _setValue(event);
+    });
+  }
 
   final MethodChannel _channel;
-
-  Future<void> setText(String text) async {
-    assert(text != null);
-    return _channel.invokeMethod('setText', text);
-  }
+  final EventChannel _eventChannel;
+  Stream<String> _onTextChanged;
 
   Future<String> getText() async {
     return _channel.invokeMethod('getText');
+  }
+
+  String get text => value.text;
+
+  _setValue(String newText) {
+    value = value.copyWith(
+      text: newText,
+      selection: const TextSelection.collapsed(offset: -1),
+      composing: TextRange.empty,
+    );
+  }
+
+  set text(String newText) {
+    assert(text != null);
+    _setValue(newText);
+    _channel.invokeMethod('setText', newText);
+  }
+
+  void clear() {
+    value = TextEditingValue.empty;
+    _channel.invokeMethod('setText', '');
   }
 }

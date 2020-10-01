@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 RaisedButton(
                   onPressed: () {
-                    if (_controller != null) _controller.setText('TESTING');
+                    if (_controller != null) _controller.text = 'TESTIG';
                   },
                   child: Text('TEST'),
                 )

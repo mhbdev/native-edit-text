@@ -2,6 +2,7 @@ package net.apexteam.native_edit_text_example;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
